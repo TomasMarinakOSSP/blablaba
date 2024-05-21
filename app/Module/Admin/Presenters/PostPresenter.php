@@ -23,11 +23,15 @@ final class PostPresenter extends Nette\Application\UI\Presenter
             $this->error('Stránka nebyla nalezena');
         }
     
-        $this->facade->addView($postId); // Zde voláme metodu addView pro zvýšení počtu zhlédnutí
+        $this->facade->addView($postId);
     
         $this->template->post = $post;
         $this->template->comments = $this->facade->getComments($postId);
+        $this->template->likes = $post->likes; // Předpokládáme, že sloupce jsou správně načteny
+        $this->template->dislikes = $post->dislikes;
     }
+    
+
 
     protected function createComponentCommentForm(): Form
     {
@@ -70,4 +74,17 @@ final class PostPresenter extends Nette\Application\UI\Presenter
         $this->template->comments = $this->facade->getComments($postId);
 
     }
+
+    public function handleLiked(int $postId, int $liked): void
+{
+    if ($this->getUser()->isLoggedIn()) {
+        $userId = $this->getUser()->getId();
+        $this->facade->updateRating($userId, $postId, $liked);
+        $this->flashMessage('Hodnocení bylo uloženo.', 'success');
+    } else {
+        $this->flashMessage('Pro hodnocení příspěvků se musíte přihlásit.', 'error');
+    }
+    $this->redirect('this');
+}
+
 }

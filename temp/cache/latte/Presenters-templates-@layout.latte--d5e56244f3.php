@@ -52,7 +52,9 @@ final class Template_d5e56244f3 extends Latte\Runtime\Template
 			echo '">Přihlásit</a></li>
 ';
 		}
-		echo '		
+		echo '		<li><a href="';
+		echo LR\Filters::escapeHtmlAttr($this->global->uiControl->link('Edit:create')) /* line 25 */;
+		echo '">Napsat nový příspěvek</a></li>
 	</ul>
 </nav>
 

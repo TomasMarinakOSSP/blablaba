@@ -1,22 +1,24 @@
 {block content}
 
     <div class="prispevky">
-    {foreach $posts as $post}
-        {if $post->status !== 'ARCHIVED' || $user->isLoggedIn()}
-            <div class="post">
-                <div class="date">{$post->created_at|date:'F j, Y'}</div>
+{foreach $posts as $post}
+    {if $post->status !== 'ARCHIVED' || $user->isLoggedIn()}
+        <div class="post">
+            <div class="date">{$post->created_at|date:'F j, Y'}</div>
 
-                <h2><a n:href="Post:show $post->id">{$post->title}</a></h2>
+            <h2><a n:href="Post:show $post->id">{$post->title}</a></h2>
 
-                <img src="{$basePath}/{$post->image}" class="img-fluid" alt="Obrázek k článku {$post->title}">
+            <img src="{$basePath}/{$post->image}" class="img-fluid" alt="Obrázek k článku {$post->title}">
 
-                <div>{$post->content|truncate:256}</div>
+            <div>{$post->content|truncate:256}</div>
 
-                <div class="views">Počet zhlédnutí: {$post->views}</div>
-            </div>
-        {/if}
-    {/foreach}
-    </div>
+            <div class="views">Počet zhlédnutí: {$post->views}</div>
+            <div class="likes">Počet "Líbí se mi": {$post->likes}</div>
+            <div class="dislikes">Počet "Nelíbí se mi": {$post->dislikes}</div>
+        </div>
+    {/if}
+{/foreach}
+</div>
 
     {if $paginator->pageCount > 1} {* zobrazíme pouze pokud je více než 1 strana *}
     <div class="pagination"> {* vytvoříme odkazy na stránkování *}

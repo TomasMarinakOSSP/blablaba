@@ -15,7 +15,13 @@
 
         <div class="status">Stav: {$post->status}</div>
 
-        <div class="views">Počet zhlédnutí: {$post->views}</div> <!-- Přidáme zobrazení počtu zhlédnutí -->
+        <div class="views">Počet zhlédnutí: {$post->views}</div>
+        
+        <div class="likes">Počet "Líbí se mi": {$likes}</div>
+        <div class="dislikes">Počet "Nelíbí se mi": {$dislikes}</div>
+
+        <a n:href="liked! $post->id,1">Líbí se mi!</a>
+        <a n:href="liked! $post->id,0">Nelíbí se mi!</a>
 
         {if $post->status === 'OPEN'}
             <h2>Vložte nový příspěvek</h2>

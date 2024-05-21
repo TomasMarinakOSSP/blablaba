@@ -5,7 +5,7 @@ return array (
     'App\\Model\\PostFacade' => 
     array (
       0 => '/home/marinakt/user-auth01-2/app/Model/PostFacade.php',
-      1 => 1716211712,
+      1 => 1716282132,
     ),
     'App\\Model\\UserFacade' => 
     array (
@@ -50,7 +50,7 @@ return array (
     'App\\Module\\Admin\\Presenters\\PostPresenter' => 
     array (
       0 => '/home/marinakt/user-auth01-2/app/Module/Admin/Presenters/PostPresenter.php',
-      1 => 1716211712,
+      1 => 1716281983,
     ),
     'App\\Module\\Auxiliary\\Presenters\\Error4xxPresenter' => 
     array (

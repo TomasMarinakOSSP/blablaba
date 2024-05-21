@@ -30,7 +30,7 @@ final class Template_b67152c77b extends Latte\Runtime\Template
 		extract($this->params);
 
 		if (!$this->getReferringTemplate() || $this->getReferenceType() === 'extends') {
-			foreach (array_intersect_key(['comment' => '31'], $this->params) as $ʟ_v => $ʟ_l) {
+			foreach (array_intersect_key(['comment' => '37'], $this->params) as $ʟ_v => $ʟ_l) {
 				trigger_error("Variable \$$ʟ_v overwritten in foreach on line $ʟ_l");
 			}
 		}
@@ -82,24 +82,38 @@ final class Template_b67152c77b extends Latte\Runtime\Template
 
         <div class="views">Počet zhlédnutí: ';
 			echo LR\Filters::escapeHtmlText($post->views) /* line 18 */;
-			echo '</div> <!-- Přidáme zobrazení počtu zhlédnutí -->
+			echo '</div>
+        
+        <div class="likes">Počet "Líbí se mi": ';
+			echo LR\Filters::escapeHtmlText($likes) /* line 20 */;
+			echo '</div>
+        <div class="dislikes">Počet "Nelíbí se mi": ';
+			echo LR\Filters::escapeHtmlText($dislikes) /* line 21 */;
+			echo '</div>
+
+        <a href="';
+			echo LR\Filters::escapeHtmlAttr($this->global->uiControl->link('liked!', [$post->id, 1])) /* line 23 */;
+			echo '">Líbí se mi!</a>
+        <a href="';
+			echo LR\Filters::escapeHtmlAttr($this->global->uiControl->link('liked!', [$post->id, 0])) /* line 24 */;
+			echo '">Nelíbí se mi!</a>
 
 ';
-			if ($post->status === 'OPEN') /* line 20 */ {
+			if ($post->status === 'OPEN') /* line 26 */ {
 				echo '            <h2>Vložte nový příspěvek</h2>
 ';
 				$ʟ_tmp = $this->global->uiControl->getComponent('commentForm');
 				if ($ʟ_tmp instanceof Nette\Application\UI\Renderable) $ʟ_tmp->redrawControl(null, false);
-				$ʟ_tmp->render() /* line 22 */;
+				$ʟ_tmp->render() /* line 28 */;
 
-			} elseif ($post->status === 'CLOSED' && $user->isLoggedIn()) /* line 23 */ {
+			} elseif ($post->status === 'CLOSED' && $user->isLoggedIn()) /* line 29 */ {
 				echo '            <h2>Přidání komentáře je povoleno pouze přihlášeným uživatelům.</h2>
 ';
 				$ʟ_tmp = $this->global->uiControl->getComponent('commentForm');
 				if ($ʟ_tmp instanceof Nette\Application\UI\Renderable) $ʟ_tmp->redrawControl(null, false);
-				$ʟ_tmp->render() /* line 25 */;
+				$ʟ_tmp->render() /* line 31 */;
 
-			} else /* line 26 */ {
+			} else /* line 32 */ {
 				echo '            <h2>Komentáře nelze přidávat.</h2>
 ';
 			}
@@ -107,12 +121,12 @@ final class Template_b67152c77b extends Latte\Runtime\Template
 			echo '
         <div class="comments">
 ';
-			foreach ($comments as $comment) /* line 31 */ {
+			foreach ($comments as $comment) /* line 37 */ {
 				echo '                <p><b>';
-				echo LR\Filters::escapeHtmlText($comment->name) /* line 32 */;
+				echo LR\Filters::escapeHtmlText($comment->name) /* line 38 */;
 				echo '</b> napsal:</p>
                 <div>';
-				echo LR\Filters::escapeHtmlText($comment->content) /* line 33 */;
+				echo LR\Filters::escapeHtmlText($comment->content) /* line 39 */;
 				echo '</div>
 ';
 
@@ -120,7 +134,7 @@ final class Template_b67152c77b extends Latte\Runtime\Template
 
 			echo '
             <a href="';
-			echo LR\Filters::escapeHtmlAttr($this->global->uiControl->link('Edit:edit', [$post->id])) /* line 36 */;
+			echo LR\Filters::escapeHtmlAttr($this->global->uiControl->link('Edit:edit', [$post->id])) /* line 42 */;
 			echo '">Upravit příspěvek</a>
 
         </div>

@@ -23,8 +23,10 @@ final class PostFacade
     {
         return $this->database
             ->table('posts')
+            ->select('id, title, content, created_at, image, status, views, likes, dislikes') // Zajistěte, aby tyto sloupce byly zahrnuty
             ->get($postId);
     }
+    
 
     public function getComments(int $postId)
     {
@@ -76,4 +78,50 @@ final class PostFacade
         ->where('id', $postId)
         ->update(['views' => new Nette\Database\SqlLiteral('views + 1')]);
 }
+
+public function updateRating(int $userId, int $postId, int $liked): void
+{
+    $row = $this->database->table('rating')
+        ->where('user_id', $userId)
+        ->where('post_id', $postId)
+        ->fetch();
+
+    if ($row) {
+        $this->database->table('rating')
+            ->where('user_id', $userId)
+            ->where('post_id', $postId)
+            ->update(['liked' => $liked]);
+    } else {
+        $this->database->table('rating')->insert([
+            'user_id' => $userId,
+            'post_id' => $postId,
+            'liked' => $liked
+        ]);
+    }
+
+    // Aktualizace počtu liků a disliků
+    $this->updatePostLikes($postId);
+}
+
+private function updatePostLikes(int $postId): void
+{
+    $likes = $this->database->table('rating')
+        ->where('post_id', $postId)
+        ->where('liked', 1)
+        ->count();
+
+    $dislikes = $this->database->table('rating')
+        ->where('post_id', $postId)
+        ->where('liked', 0)
+        ->count();
+
+    $this->database->table('posts')
+        ->where('id', $postId)
+        ->update([
+            'likes' => $likes,
+            'dislikes' => $dislikes
+        ]);
+}
+
+
 }
