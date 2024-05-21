@@ -15,13 +15,24 @@
 
         <div class="status">Stav: {$post->status}</div>
 
-        <div class="views">Počet zhlédnutí: {$post->views}</div>
+       <div class="views">Počet zhlédnutí: {$post->views}</div>
         
-        <div class="likes">Počet "Líbí se mi": {$likes}</div>
-        <div class="dislikes">Počet "Nelíbí se mi": {$dislikes}</div>
+<div class="likes">Počet "Líbí se mi": {$likes}</div>
+<div class="dislikes">Počet "Nelíbí se mi": {$dislikes}</div>
 
+{if $user->isLoggedIn()}
+    {if $userRating === null}
         <a n:href="liked! $post->id,1">Líbí se mi!</a>
         <a n:href="liked! $post->id,0">Nelíbí se mi!</a>
+    {elseif $userRating->liked == 1}
+        <span>Líbí se mi</span>
+    {elseif $userRating->liked == 0}
+        <span>Nelíbí se mi</span>
+    {/if}
+{else}
+    <p>Pro hodnocení příspěvků se musíte přihlásit.</p>
+{/if}
+
 
         {if $post->status === 'OPEN'}
             <h2>Vložte nový příspěvek</h2>

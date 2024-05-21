@@ -25,7 +25,7 @@ return array (
     'App\\Module\\Admin\\Presenters\\PostPresenter' => 
     array (
       0 => '/home/marinakt/user-auth01-2/app/Module/Admin/Presenters/PostPresenter.php',
-      1 => 1716281983,
+      1 => 1716283757,
     ),
     'App\\Module\\Auxiliary\\Presenters\\Error4xxPresenter' => 
     array (

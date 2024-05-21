@@ -16,20 +16,25 @@ final class PostPresenter extends Nette\Application\UI\Presenter
     }
 
     public function renderShow(int $postId): void
-    {
-        $post = $this->facade->getPostById($postId);
-    
-        if (!$post) {
-            $this->error('Stránka nebyla nalezena');
-        }
-    
-        $this->facade->addView($postId);
-    
-        $this->template->post = $post;
-        $this->template->comments = $this->facade->getComments($postId);
-        $this->template->likes = $post->likes; // Předpokládáme, že sloupce jsou správně načteny
-        $this->template->dislikes = $post->dislikes;
+{
+    $post = $this->facade->getPostById($postId);
+
+    if (!$post) {
+        $this->error('Stránka nebyla nalezena');
     }
+
+    $this->facade->addView($postId);
+
+    $userId = $this->getUser()->getId();
+    $userRating = $this->facade->getUserRating($userId, $postId);
+
+    $this->template->post = $post;
+    $this->template->comments = $this->facade->getComments($postId);
+    $this->template->likes = $post->likes;
+    $this->template->dislikes = $post->dislikes;
+    $this->template->userRating = $userRating;
+}
+
     
 
 

@@ -30,7 +30,7 @@ final class Template_b67152c77b extends Latte\Runtime\Template
 		extract($this->params);
 
 		if (!$this->getReferringTemplate() || $this->getReferenceType() === 'extends') {
-			foreach (array_intersect_key(['comment' => '37'], $this->params) as $ʟ_v => $ʟ_l) {
+			foreach (array_intersect_key(['comment' => '48'], $this->params) as $ʟ_v => $ʟ_l) {
 				trigger_error("Variable \$$ʟ_v overwritten in foreach on line $ʟ_l");
 			}
 		}
@@ -80,40 +80,58 @@ final class Template_b67152c77b extends Latte\Runtime\Template
 			echo LR\Filters::escapeHtmlText($post->status) /* line 16 */;
 			echo '</div>
 
-        <div class="views">Počet zhlédnutí: ';
+       <div class="views">Počet zhlédnutí: ';
 			echo LR\Filters::escapeHtmlText($post->views) /* line 18 */;
 			echo '</div>
         
-        <div class="likes">Počet "Líbí se mi": ';
+<div class="likes">Počet "Líbí se mi": ';
 			echo LR\Filters::escapeHtmlText($likes) /* line 20 */;
 			echo '</div>
-        <div class="dislikes">Počet "Nelíbí se mi": ';
+<div class="dislikes">Počet "Nelíbí se mi": ';
 			echo LR\Filters::escapeHtmlText($dislikes) /* line 21 */;
 			echo '</div>
 
+';
+			if ($user->isLoggedIn()) /* line 23 */ {
+				if ($userRating === null) /* line 24 */ {
+					echo '        <a href="';
+					echo LR\Filters::escapeHtmlAttr($this->global->uiControl->link('liked!', [$post->id, 1])) /* line 25 */;
+					echo '">Líbí se mi!</a>
         <a href="';
-			echo LR\Filters::escapeHtmlAttr($this->global->uiControl->link('liked!', [$post->id, 1])) /* line 23 */;
-			echo '">Líbí se mi!</a>
-        <a href="';
-			echo LR\Filters::escapeHtmlAttr($this->global->uiControl->link('liked!', [$post->id, 0])) /* line 24 */;
-			echo '">Nelíbí se mi!</a>
+					echo LR\Filters::escapeHtmlAttr($this->global->uiControl->link('liked!', [$post->id, 0])) /* line 26 */;
+					echo '">Nelíbí se mi!</a>
+';
+				} elseif ($userRating->liked == 1) /* line 27 */ {
+					echo '        <span>Líbí se mi</span>
+';
+				} elseif ($userRating->liked == 0) /* line 29 */ {
+					echo '        <span>Nelíbí se mi</span>
+';
+				}
+
+
+			} else /* line 32 */ {
+				echo '    <p>Pro hodnocení příspěvků se musíte přihlásit.</p>
+';
+			}
+			echo '
 
 ';
-			if ($post->status === 'OPEN') /* line 26 */ {
+			if ($post->status === 'OPEN') /* line 37 */ {
 				echo '            <h2>Vložte nový příspěvek</h2>
 ';
 				$ʟ_tmp = $this->global->uiControl->getComponent('commentForm');
 				if ($ʟ_tmp instanceof Nette\Application\UI\Renderable) $ʟ_tmp->redrawControl(null, false);
-				$ʟ_tmp->render() /* line 28 */;
+				$ʟ_tmp->render() /* line 39 */;
 
-			} elseif ($post->status === 'CLOSED' && $user->isLoggedIn()) /* line 29 */ {
+			} elseif ($post->status === 'CLOSED' && $user->isLoggedIn()) /* line 40 */ {
 				echo '            <h2>Přidání komentáře je povoleno pouze přihlášeným uživatelům.</h2>
 ';
 				$ʟ_tmp = $this->global->uiControl->getComponent('commentForm');
 				if ($ʟ_tmp instanceof Nette\Application\UI\Renderable) $ʟ_tmp->redrawControl(null, false);
-				$ʟ_tmp->render() /* line 31 */;
+				$ʟ_tmp->render() /* line 42 */;
 
-			} else /* line 32 */ {
+			} else /* line 43 */ {
 				echo '            <h2>Komentáře nelze přidávat.</h2>
 ';
 			}
@@ -121,12 +139,12 @@ final class Template_b67152c77b extends Latte\Runtime\Template
 			echo '
         <div class="comments">
 ';
-			foreach ($comments as $comment) /* line 37 */ {
+			foreach ($comments as $comment) /* line 48 */ {
 				echo '                <p><b>';
-				echo LR\Filters::escapeHtmlText($comment->name) /* line 38 */;
+				echo LR\Filters::escapeHtmlText($comment->name) /* line 49 */;
 				echo '</b> napsal:</p>
                 <div>';
-				echo LR\Filters::escapeHtmlText($comment->content) /* line 39 */;
+				echo LR\Filters::escapeHtmlText($comment->content) /* line 50 */;
 				echo '</div>
 ';
 
@@ -134,7 +152,7 @@ final class Template_b67152c77b extends Latte\Runtime\Template
 
 			echo '
             <a href="';
-			echo LR\Filters::escapeHtmlAttr($this->global->uiControl->link('Edit:edit', [$post->id])) /* line 42 */;
+			echo LR\Filters::escapeHtmlAttr($this->global->uiControl->link('Edit:edit', [$post->id])) /* line 53 */;
 			echo '">Upravit příspěvek</a>
 
         </div>
