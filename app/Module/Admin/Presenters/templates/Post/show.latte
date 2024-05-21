@@ -16,7 +16,7 @@
         <div class="status">Stav: {$post->status}</div>
 
        <div class="views">Počet zhlédnutí: {$post->views}</div>
-        
+
 <div class="likes">Počet "Líbí se mi": {$likes}</div>
 <div class="dislikes">Počet "Nelíbí se mi": {$dislikes}</div>
 
@@ -26,7 +26,9 @@
         <a n:href="liked! $post->id,0">Nelíbí se mi!</a>
     {elseif $userRating->liked == 1}
         <span>Líbí se mi</span>
+        <a n:href="liked! $post->id,0">Nelíbí se mi!</a>
     {elseif $userRating->liked == 0}
+        <a n:href="liked! $post->id,1">Líbí se mi!</a>
         <span>Nelíbí se mi</span>
     {/if}
 {else}
